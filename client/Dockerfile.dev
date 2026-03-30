@@ -1,0 +1,12 @@
+# get the latest node image from the docker hub
+FROM node:18-alpine
+# set the working directory to /app
+WORKDIR /app
+# copy the package.json which contains the dependencies and package-lock.json files to the working directory
+COPY package*.json ./
+# install the dependencies that are listed in the package.json file
+RUN npm install
+# copy the rest of the files for the application to the working directory
+COPY . .
+# give default command to run when the container starts, in this case it will run the start script defined in the package.json file which will start the development server for the React application
+CMD ["npm", "run", "start"]    
