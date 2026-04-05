@@ -16,8 +16,8 @@ after_success:
   - docker build -t tcollins520/multi-worker ./worker
   # log in to the Docker CLI using the credentials stored as Travis environment variables
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  # push the images to Docker Hub
+  # take your images and push them to Docker Hub
   - docker push tcollins520/multi-client
   - docker push tcollins520/multi-nginx
   - docker push tcollins520/multi-server
-  - docker push tcollins520/multi-worker
+ 
