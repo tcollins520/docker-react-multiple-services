@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker 
+# build the image using the Dockerfile.dev file that's in the client directory
+before_install:
+  - docker build -t tcollins520/react-test -f ./client/Dockerfile.dev ./client
+# run tests using the image we just built
+# if the tests fails, the build will exit with a non-zero code and Travis will mark the build as failed
+script:
+  - docker run tcollins520/react-test npm test -- --coverage
+# if the tests pass, then we build the production images for each service and push them to Docker Hub
+after_success: 
+  - docker build -t tcollins520/multi-client ./client
+  - docker build -t tcollins520/multi-nginx ./nginx
+  - docker build -t tcollins520/multi-server ./server
+  - docker build -t tcollins520/multi-worker ./worker
+  # log in to the Docker CLI using the credentials stored as Travis environment variables
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  # push the images to Docker Hub
+  - docker push tcollins520/multi-client
+  - docker push tcollins520/multi-nginx
+  - docker push tcollins520/multi-server
+  - docker push tcollins520/multi-worker
