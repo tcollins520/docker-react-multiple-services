@@ -20,4 +20,5 @@ after_success:
   - docker push tcollins520/multi-client
   - docker push tcollins520/multi-nginx
   - docker push tcollins520/multi-server
+  - docker push tcollins520/multi-worker
  
