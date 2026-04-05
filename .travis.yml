@@ -7,7 +7,7 @@ before_install:
 # run tests using the image we just built
 # if the tests fails, the build will exit with a non-zero code and Travis will mark the build as failed
 script:
-  - docker run tcollins520/react-test npm test -- --coverage
+  - docker run tcollins520/react-test npm test -- --coverage --watchAll=false
 # if the tests pass, then we build the production images for each service and push them to Docker Hub
 after_success: 
   - docker build -t tcollins520/multi-client ./client
